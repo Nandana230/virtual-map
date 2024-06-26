@@ -8,7 +8,7 @@ import "../index.css";
 const navigation = [
   { name: 'Home', href: '#' },
   { name: 'About' }, // Modified line
-  
+  { name: 'Contact Us', href: '/contact-us' } // Added Contact Us link
 ];
 
 export default function Newpage() {
@@ -173,13 +173,20 @@ export default function Newpage() {
       <div className="bg-gradient-to-b from-pink-100 to-teal-200 min-h-screen flex items-center justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-6 py-14 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Welcome to CUCEK
+            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-gray-900">
+              Discover CUCEK:
+              <span className="block text-2xl sm:text-4xl font-medium text-gray-900">
+                An Exciting Virtual Adventure Through Our Scenic Campus!
+              </span>
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Welcome to the panoramic interactive campus map of Cochin University College of Engineering, Kuttanad (CUCEK).
-              
-              Immerse yourself in an innovative and immersive exploration of our vibrant campus nestled in the heart of Kuttanad's picturesque landscape.With our interactive map, you can embark on a virtual journey through the various landmarks, facilities, and scenic spots that define the essence of CUCEK. Whether you're a prospective student, faculty member, or simply curious about our institution, this panoramic map offers a dynamic way to experience our campus from anywhere in the world.Navigate through the map, explore each corner of our campus, and discover the rich tapestry of academic excellence, research endeavors, and student life that make CUCEK a hub of innovation and learning.
+            <p className="mt-6 text-lg leading-8 text-gray-700 sm:text-xl sm:leading-9">
+              Step into the captivating world of Cochin University College of Engineering, Kuttanad (CUCEK) with our interactive campus map! Nestled in the heart of Kuttanad's picturesque landscape, our vibrant campus is now at your fingertips.
+            </p>
+            <p className="mt-6 text-lg leading-8 text-gray-700 sm:text-xl sm:leading-9">
+              Embark on a virtual journey where you can explore our landmarks and serene scenic spots. This dynamic map offers a fun and engaging way to experience CUCEK from anywhere in the world.
+            </p>
+            <p className="mt-6 text-lg leading-8 text-gray-700 sm:text-xl sm:leading-9">
+              Whether you're a prospective student, faculty member, or simply curious about our institution, this panoramic map offers a dynamic way to experience our campus from anywhere in the world. Navigate through the map, explore each corner of our campus, and discover the rich tapestry of academic excellence, research endeavors, and student life that make CUCEK a hub of innovation and learning.
             </p>
           </div>
           <img
@@ -300,4 +307,3 @@ export default function Newpage() {
     </div>
   );
 }
-
