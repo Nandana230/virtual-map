@@ -174,8 +174,8 @@ export default function Newpage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-6 py-14 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-gray-900">
-              Discover CUCEK:
-              <span className="block text-2xl sm:text-4xl font-medium text-gray-900">
+              
+              <span className="block text-3xl sm:text-4xl font-medium text-gray-900">
                 An Exciting Virtual Adventure Through Our Scenic Campus!
               </span>
             </h1>

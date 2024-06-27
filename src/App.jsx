@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
@@ -7,6 +8,7 @@ import AboutPage from './Pages/AboutPage';
 import GoBackButton from './components/GoBackButton';
 import AdminDashboard from './components/AdminDashboard';
 import ContactUs from './Pages/ContactUs';
+import MainLayout from './components/MainLayout';
 import { auth, db } from './firebaseConfig';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -19,7 +21,6 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Check if user is an admin
         const adminDoc = await getDoc(doc(db, 'admins', user.uid));
         if (adminDoc.exists() && adminDoc.data().role === 'admin') {
           setAdmin(true);
@@ -51,19 +52,16 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />} />
 
         <Route
-          path="/login"
-          element={loggedIn ? <Navigate to="/admin" /> : <LoginPage />}
-        />
+  path="/login"
+  element={loggedIn ? <Navigate to="/admin" /> : <LoginPage />}
+/>
 
-        <Route
-          path="/edit"
-          element={loggedIn && admin ? <EditPage data={data} handleUpdate={handleUpdate} /> : <Navigate to="/login" />}
-        />
-
-        <Route
-          path="/admin"
-          element={loggedIn && admin ? <AdminDashboard /> : <Navigate to="/login" />}
-        />
+<Route
+  path="/admin"
+  element={loggedIn && admin ? <MainLayout /> : <Navigate to="/login" />}
+>
+  <Route index element={<AdminDashboard />} />
+</Route>
 
         <Route path="/*" element={<GoBackButton />} />
       </Routes>
