@@ -1,47 +1,38 @@
-// src/components/AdminDashboard.jsx
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
 const AdminDashboard = () => {
-  const [feedbacks, setFeedbacks] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    const fetchFeedbacks = async () => {
+    const fetchData = async () => {
       try {
-        const feedbackCollection = collection(db, 'feedback');
-        const feedbackSnapshot = await getDocs(feedbackCollection);
-        const feedbackList = feedbackSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setFeedbacks(feedbackList);
+        const querySnapshot = await getDocs(collection(db, 'your-collection'));
+        const items = querySnapshot.docs.map(doc => doc.data());
+        console.log("Fetched items:", items);
+        setData(items);
       } catch (error) {
-        console.error('Error fetching feedbacks: ', error);
+        console.error("Error fetching data: ", error);
       }
     };
 
-    fetchFeedbacks();
+    fetchData();
   }, []);
 
   return (
     <div>
-      <h1>Admin Dashboard</h1>
-      <p>Welcome to the admin dashboard.</p>
-      <h2>Feedbacks</h2>
-      <ul>
-        {feedbacks.map((feedback, index) => (
-          <li key={feedback.id}>
-            <p><strong>Message:</strong> {feedback.message}</p>
-            <p><strong>Feedback:</strong> {feedback.feedback}</p>
-            <p><strong>Timestamp:</strong> {new Date(feedback.timestamp.seconds * 1000).toLocaleString()}</p>
-          </li>
-        ))}
-      </ul>
-      <h2>Analytics</h2>
-      {/* Add your analytics components or summary here */}
+      {data.length === 0 ? (
+        <p>Loading...</p>
+      ) : (
+        data.map((item, index) => (
+          <div key={index}>
+            {item && item.seconds ? <p>{item.seconds}</p> : <p>Data missing or undefined</p>}
+          </div>
+        ))
+      )}
     </div>
   );
 };
 
-export default AdminDashboard;                
+export default AdminDashboard;
