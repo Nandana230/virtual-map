@@ -1,8 +1,8 @@
-
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
+import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDxJSazrN065MCKTqbjUg3e4A05lzFoPEA",
   authDomain: "virtualmap-2e6fc.firebaseapp.com",
@@ -18,6 +18,14 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-
+// Set persistence to SESSION
+setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Existing and future Auth states are now persisted in the current session only.
+    console.log("Persistence set to SESSION");
+  })
+  .catch((error) => {
+    console.error("Error setting persistence: ", error);
+  });
 
 export { auth, db, analytics };
