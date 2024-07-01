@@ -7,7 +7,7 @@ const MainLayout = () => {
 
   return (
     <div className="flex">
-      <Sidebar setSelectedOption={setSelectedOption} />
+      <Sidebar setSelectedOption={setSelectedOption} selectedOption={selectedOption} />
       <div className="flex-1 p-4">
         <Outlet context={{ selectedOption, setSelectedOption }} />
       </div>

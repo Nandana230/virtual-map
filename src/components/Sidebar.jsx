@@ -13,7 +13,7 @@ const Sidebar = ({ setSelectedOption }) => {
     <div className="flex flex-col h-screen p-3 bg-gray-800 shadow">
       <div className="space-y-3">
         <div className="flex items-center">
-          <h2 className="text-xl font-bold text-white">Dashboard</h2>
+          <h2 className="text-3xl font-bold text-white">Admin Dashboard</h2>
         </div>
         <div className="flex-1">
           <ul className="pt-2 pb-4 space-y-1 text-sm">

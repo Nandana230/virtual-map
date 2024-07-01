@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import EditPage from './components/EditPage';
-import Newpage from './Pages/Newpage';
+import NewPage from './Pages/Newpage'; // Ensure this file exists
 import AboutPage from './Pages/AboutPage';
 import GoBackButton from './components/GoBackButton';
 import AdminDashboard from './components/AdminDashboard';
@@ -40,13 +40,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Newpage />} />
+        <Route path="/" element={<NewPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/login" element={loggedIn ? <Navigate to="/admin" /> : <LoginPage />} />
         <Route path="/admin" element={loggedIn && admin ? <MainLayout /> : <Navigate to="/login" />}>
           <Route path="feedbacks" element={<AdminDashboard />} />
           <Route path="feedback-analytics" element={<AdminDashboard />} />
+          <Route path="analytics" element={<AdminDashboard />} />
           <Route index element={<Navigate to="/admin/feedbacks" />} />
         </Route>
         <Route path="/*" element={<GoBackButton />} />

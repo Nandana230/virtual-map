@@ -4,6 +4,7 @@ import { db } from '../firebaseConfig';
 import { useOutletContext } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { getAuth, signOut } from 'firebase/auth'; // Assuming you have firebase auth imported
 
 const AdminDashboard = () => {
   const { selectedOption } = useOutletContext();
@@ -143,6 +144,16 @@ const AdminDashboard = () => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
+  const handleLogout = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      // Redirect or handle logout success
+    } catch (error) {
+      console.error('Error signing out: ', error);
+    }
+  };
+
   const chartOptions = {
     maintainAspectRatio: false,
     scales: {
@@ -184,7 +195,15 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4 bg-white">
+      <div className="flex justify-end mb-4">
+        <button
+          className="bg-pink-600 text-white px-4 py-2 rounded-md"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -193,7 +212,7 @@ const AdminDashboard = () => {
             <div>
               <div className="flex justify-end mb-4">
                 <button
-                  className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
+                  className="bg-pink-700 text-white px-4 py-2 rounded-md mr-2"
                   onClick={handleSort}
                 >
                   Sort by Date: {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
@@ -203,7 +222,7 @@ const AdminDashboard = () => {
                 <p>No feedback data available.</p>
               ) : (
                 feedbackData.map((feedback, index) => (
-                  <div key={index} className="bg-white shadow-md rounded p-4 mb-4">
+                  <div key={index} className="bg-gradient-to-r from-red-200 to-pink-200 shadow-md rounded p-4 mb-4">
                     {feedback && feedback.message ? (
                       <div>
                         <p className="font-bold">Name: <span className="font-normal">{feedback.name}</span></p>
@@ -224,30 +243,25 @@ const AdminDashboard = () => {
             <div>
               <h2 className="text-2xl font-bold mb-4">Feedback Analytics</h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                <div className="bg-white shadow-md rounded p-4">
+                <div className="bg-gradient-to-r from-red-200 to-pink-200 shadow-md rounded p-4">
                   <h3 className="text-xl font-bold">Feedbacks This Week</h3>
-                  <p className="text-2xl">{thisWeekCount}</p>
+                  <p className="text-4xl">{thisWeekCount}</p>
                 </div>
-                <div className="bg-white shadow-md rounded p-4">
+                <div className="bg-gradient-to-r from-red-200 to-pink-200 shadow-md rounded p-4">
                   <h3 className="text-xl font-bold">Feedbacks Last Week</h3>
-                  <p className="text-2xl">{lastWeekCount}</p>
+                  <p className="text-4xl">{lastWeekCount}</p>
                 </div>
-                <div className="bg-white shadow-md rounded p-4">
+                <div className="bg-gradient-to-r from-red-200 to-pink-200 shadow-md rounded p-4">
                   <h3 className="text-xl font-bold">Feedbacks Last Month</h3>
-                  <p className="text-2xl">{lastMonthCount}</p>
+                  <p className="text-4xl">{lastMonthCount}</p>
                 </div>
               </div>
-              <div className="mb-4">
-                <h3 className="text-xl font-bold mb-2">Feedbacks in Current Month</h3>
-                <div style={{ height: '200px' }}>
-                  <Bar data={feedbackAnalyticsData.weekly} options={chartOptions} />
-                </div>
+              <div className="	
+bg-white shadow-md rounded p-4 mb-4 h-64">
+                <Bar data={feedbackAnalyticsData.weekly} options={chartOptions} />
               </div>
-              <div className="mb-4">
-                <h3 className="text-xl font-bold mb-2">Feedbacks in the Year</h3>
-                <div style={{ height: '200px' }}>
-                  <Bar data={feedbackAnalyticsData.monthly} options={chartOptions} />
-                </div>
+              <div className="bg-white shadow-md rounded p-4 h-64">
+                <Bar data={feedbackAnalyticsData.monthly} options={chartOptions} />
               </div>
             </div>
           )}
@@ -258,4 +272,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
