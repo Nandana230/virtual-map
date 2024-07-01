@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
@@ -16,7 +15,6 @@ import { doc, getDoc } from 'firebase/firestore';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [admin, setAdmin] = useState(false);
-  const [data, setData] = useState('Initial data from MongoDB');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -39,30 +37,18 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  const handleUpdate = (newData) => {
-    setData(newData);
-    alert('Data updated successfully');
-  };
-
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Newpage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact-us" element={<ContactUs />} />
-
-        <Route
-  path="/login"
-  element={loggedIn ? <Navigate to="/admin" /> : <LoginPage />}
-/>
-
-<Route
-  path="/admin"
-  element={loggedIn && admin ? <MainLayout /> : <Navigate to="/login" />}
->
-  <Route index element={<AdminDashboard />} />
-</Route>
-
+        <Route path="/login" element={loggedIn ? <Navigate to="/admin" /> : <LoginPage />} />
+        <Route path="/admin" element={loggedIn && admin ? <MainLayout /> : <Navigate to="/login" />}>
+          <Route path="feedbacks" element={<AdminDashboard />} />
+          <Route path="feedback-analytics" element={<AdminDashboard />} />
+          <Route index element={<Navigate to="/admin/feedbacks" />} />
+        </Route>
         <Route path="/*" element={<GoBackButton />} />
       </Routes>
     </Router>

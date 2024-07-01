@@ -1,14 +1,15 @@
-// src/components/MainLayout.jsx
-import React from 'react';
-import Sidebar from './Sidebar';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 const MainLayout = () => {
+  const [selectedOption, setSelectedOption] = useState('feedbacks');
+
   return (
     <div className="flex">
-      <Sidebar />
+      <Sidebar setSelectedOption={setSelectedOption} />
       <div className="flex-1 p-4">
-        <Outlet />
+        <Outlet context={{ selectedOption, setSelectedOption }} />
       </div>
     </div>
   );
